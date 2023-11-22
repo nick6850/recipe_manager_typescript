@@ -5,14 +5,21 @@ import SingleRecipe from "./SingleRecipe";
 interface DisplayRecipesProps {
   recipeList: recipeModel[];
   deleteRecipe: (id: number) => void;
+  updateRecipeList: (updatedREcipe: recipeModel) => void;
 }
 
 const DisplayRecipes: FC<DisplayRecipesProps> = ({
   recipeList,
   deleteRecipe,
+  updateRecipeList,
 }) => {
   const recipeEl = recipeList.map((recipe, id) => (
-    <SingleRecipe key={id} {...recipe} deleteRecipe={deleteRecipe} />
+    <SingleRecipe
+      key={id}
+      {...recipe}
+      deleteRecipe={deleteRecipe}
+      updateRecipeList={updateRecipeList}
+    />
   ));
 
   return (

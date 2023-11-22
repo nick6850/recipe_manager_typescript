@@ -1,28 +1,26 @@
-import { FC, useState } from "react";
-import NewRecipe from "./components/NewRecipe";
-import recipeModel from "./recipeModel";
-import DisplayRecipes from "./components/DisplayRecipes";
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./Pages/HomePage";
+import RecipePage from "./Pages/RecipePage";
 import initialData from "./initialData";
+import recipeModel from "./recipeModel";
+import { useState } from "react";
 
 type recipeList = recipeModel[];
 
-const App: FC = () => {
+const App = () => {
   const [recipeList, setRecipeList] = useState<recipeList>(initialData);
 
-  const deleteRecipe = (id: number): void => {
-    setRecipeList((prev) => prev.filter((recipe) => recipe.id != id));
-  };
-
-  const addRecipeList = (newRecipe: recipeModel): void => {
-    setRecipeList([...recipeList, newRecipe]);
-  };
-
   return (
-    <div className="w-screen h-screen flex flex-col items-center">
-      <h1 className="uppercase text-4xl m-5 tracking-widest">Recipe Manager</h1>
-      <NewRecipe addRecipeList={addRecipeList} />
-      <DisplayRecipes recipeList={recipeList} deleteRecipe={deleteRecipe} />
-    </div>
+    <Routes>
+      <Route
+        path="/"
+        element={<HomePage recipeTools={{ recipeList, setRecipeList }} />}
+      />
+      <Route
+        path="/recipe/:id"
+        element={<RecipePage recipeList={recipeList} />}
+      />
+    </Routes>
   );
 };
 
